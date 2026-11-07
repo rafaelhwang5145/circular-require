@@ -34,3 +34,10 @@ The other deliberate simplification is path resolution. Dependencies are resolve
 ## The awkward edge
 
 Dependencies that point outside the file list you supplied are silently ignored. That is the right default for a flat input list, but it means a cycle that leaves the project and comes back through a path you did not include will not be reported. Supply every file that participates in the graph.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
